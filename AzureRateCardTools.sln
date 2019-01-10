@@ -5,6 +5,8 @@ VisualStudioVersion = 15.0.28307.136
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AzureRateCardUpload", "AzureRateCardUpload\AzureRateCardUpload.csproj", "{0A79A657-3031-4ACD-96A2-2D95B1E36023}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AzureRateCardUtils", "AzureRateCardUtils\AzureRateCardUtils.csproj", "{C897A9DE-3047-4ACC-BE2A-6ECB39C345C8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{0A79A657-3031-4ACD-96A2-2D95B1E36023}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0A79A657-3031-4ACD-96A2-2D95B1E36023}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0A79A657-3031-4ACD-96A2-2D95B1E36023}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C897A9DE-3047-4ACC-BE2A-6ECB39C345C8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C897A9DE-3047-4ACC-BE2A-6ECB39C345C8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C897A9DE-3047-4ACC-BE2A-6ECB39C345C8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C897A9DE-3047-4ACC-BE2A-6ECB39C345C8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
