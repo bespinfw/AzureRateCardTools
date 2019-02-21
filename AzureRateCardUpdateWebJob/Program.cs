@@ -6,7 +6,7 @@ using Microsoft.Extensions.Logging;
 
 namespace AzureRateCardUpdateWebJob
 {
-    class Program
+    public class Program
     {
         static void Main(string[] args)
         {
@@ -30,7 +30,7 @@ namespace AzureRateCardUpdateWebJob
             }
         }
 
-        [NoAutomaticTrigger]
+        [NoAutomaticTrigger()]
         public static void Import(ILogger logger)
         {
             logger.LogInformation("Starting Import");

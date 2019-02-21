@@ -13,14 +13,14 @@ namespace AzureRateCardUpload
         public Program() { }
 
         // CosmosDBUploader Helper
-        private CosmosDBUploader uploder = new CosmosDBUploader();
+        private CosmosDBUploader uploder = new CosmosDBUploader(GetAppSetting("endpointURL"), GetAppSetting("AuthorizationKey"));
 
         // download and process rate card 'OfferID' and 'Currency' can be changed
         private AzureRateCardDownloader downloader = new AzureRateCardDownloader(
-               ConfigurationManager.AppSettings["clientId"],
-               ConfigurationManager.AppSettings["client_secret"],
-               ConfigurationManager.AppSettings["tenantId"],
-               ConfigurationManager.AppSettings["subscriptionId"]);
+               GetAppSetting("clientId"),
+               GetAppSetting("client_secret"),
+               GetAppSetting("tenantId"),
+               GetAppSetting("subscriptionId"));
         //downloader.OfferId = "MS-AZR-0003P"; //PAYG
         //downloader.Currency = "KRW";
         //downloader.RegionInfo = "KR";
@@ -32,7 +32,7 @@ namespace AzureRateCardUpload
             {
                 AzureRateCard rateCard = downloader.DownloadPAYG().Result;
 
-                uploder.BulkUpload(rateCard.Meters, ConfigurationManager.AppSettings["PAYGCollectionId"]).Wait();
+                uploder.BulkUpload(rateCard.Meters, GetAppSetting("DatabaseId"), GetAppSetting("PAYGCollectionId")).Wait();
             }
             catch (Exception e)
             {
@@ -52,7 +52,7 @@ namespace AzureRateCardUpload
                     convertedRIRateCardList.Add(new RIRateCard(item.Key, item.Value));
                 }
 
-                uploder.BulkUpload(convertedRIRateCardList, ConfigurationManager.AppSettings["RICollectionId"]).Wait();
+                uploder.BulkUpload(convertedRIRateCardList, GetAppSetting("DatabaseId"), GetAppSetting("RICollectionId")).Wait();
             }
             catch (Exception e)
             {
@@ -88,14 +88,16 @@ namespace AzureRateCardUpload
             this.ProcessRI();
         }
 
-        //static void Main(string[] args)
-        //{
-        //    var program = new Program();
+        private static string GetAppSetting(string setting)
+        {
+            var value = ConfigurationManager.AppSettings[setting];
+            if (value == null)
+            {
+                value = Environment.GetEnvironmentVariable("APPSETTING_" + setting);
+            }
 
-        //    program.ProcessPAYG();
-        //    program.ProcessRI();
-        //    //program.TestRI();
-        //    //Console.ReadKey();
-        //}
+            return value;
+        }
+
     }
 }

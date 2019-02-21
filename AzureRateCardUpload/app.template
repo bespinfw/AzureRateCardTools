@@ -1,0 +1,13 @@
+<configuration>
+  <appSettings>
+    <add key="endpointURL" value="https://[youraccount].documents.azure.com:443/"/>
+    <add key="AuthorizationKey" value="[yourcosmosdbkey]"/>
+    <add key="DatabaseId" value="[yourdbid]"/>
+    <add key="PAYGCollectionId" value="[yourPAYGcollection]"/>
+    <add key="RICollectionId" value="[yourRIcollection]"/>
+	  <add key="clientId" value="[yourApplicationId]"/>
+	  <add key="client_secret" value="[yourApplicationSecret]"/>
+	  <add key="tenantId" value="[yourAzureActiveDirectoryTendantId]"/>
+	  <add key="subscriptionId" value="[yourAzureSubscriptionId]"/>
+  </appSettings>
+</configuration>

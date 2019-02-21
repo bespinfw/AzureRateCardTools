@@ -13,25 +13,17 @@ namespace AzureRateCardUtils
         // CosmosDB SQL client
         private DocumentClient client;
 
-        private static readonly string endpointUrl = ConfigurationManager.AppSettings["endpointURL"];
-
-        private static readonly string authorizationKey = ConfigurationManager.AppSettings["AuthorizationKey"];
-
-        private static readonly string databaseId = ConfigurationManager.AppSettings["DatabaseId"];
-
-        //private static readonly string collectionId = ConfigurationManager.AppSettings["CollectionId"];
-
-        public CosmosDBUploader()
+        public CosmosDBUploader(string endpointUrl, string authorizationKey)
         {
             client = new DocumentClient(new Uri(endpointUrl), authorizationKey);
 
             // Set retry options high during initialization (default values).
             client.ConnectionPolicy.RetryOptions.MaxRetryWaitTimeInSeconds = 30;
             client.ConnectionPolicy.RetryOptions.MaxRetryAttemptsOnThrottledRequests = 9;
-
+            
         }
 
-        public async Task BulkUpload<T>(List<T> list, string collectionId)
+        public async Task BulkUpload<T>(List<T> list, string databaseId, string collectionId)
         {
             var collectionLink = UriFactory.CreateDocumentCollectionUri(databaseId, collectionId);
             Console.WriteLine("CollectionLink... " + collectionLink);
