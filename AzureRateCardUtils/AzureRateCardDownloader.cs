@@ -19,6 +19,8 @@ namespace AzureRateCardUtils
         public string Locale { get; set; }
         public string RegionInfo { get; set; }
 
+        public enum RIType { oneYear, threeYear };
+
         public AzureRateCardDownloader(string clientId, string client_secret, string tenantId, string subscriptionId)
         {
             this.clientId = clientId;
@@ -31,9 +33,14 @@ namespace AzureRateCardUtils
             this.RegionInfo = "KR";
         }
 
-        public async Task<AzureRateCard> Download()
+        public async Task<AzureRateCard> DownloadPAYG()
         {
             return await GetAzureRateCard(await GetBearerToken());
+        }
+
+        public async Task<AzureRIRateCard> DownloadRI(RIType offerType)
+        {
+            return await GetAzureRIRateCard(offerType);
         }
 
         private async Task<string> GetBearerToken()
@@ -78,6 +85,27 @@ namespace AzureRateCardUtils
 
             // Get the JSON response.
             AzureRateCard rateCard = JsonConvert.DeserializeObject<AzureRateCard>(await response.Content.ReadAsStringAsync());
+            return rateCard;
+        }
+
+
+        private async Task<AzureRIRateCard> GetAzureRIRateCard(RIType rIType)
+        {
+            var ri = "three";
+            if (rIType == RIType.oneYear)
+            {
+                ri = "one";
+            }
+            // Assemble the URI for the REST API Call.
+            string uri = $"https://azure.microsoft.com/api/v2/pricing/virtual-machines-base-{ri}-year/calculator/?culture=en-us&discount=mosp";
+
+            HttpResponseMessage response;
+
+            // Execute the REST API call.
+            response = await client.GetAsync(uri);
+
+            // Get the JSON response.
+            AzureRIRateCard rateCard = JsonConvert.DeserializeObject<AzureRIRateCard>(await response.Content.ReadAsStringAsync());
             return rateCard;
         }
 

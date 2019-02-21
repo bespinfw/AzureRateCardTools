@@ -19,7 +19,7 @@ namespace AzureRateCardUtils
 
         private static readonly string databaseId = ConfigurationManager.AppSettings["DatabaseId"];
 
-        private static readonly string collectionId = ConfigurationManager.AppSettings["CollectionId"];
+        //private static readonly string collectionId = ConfigurationManager.AppSettings["CollectionId"];
 
         public CosmosDBUploader()
         {
@@ -31,7 +31,7 @@ namespace AzureRateCardUtils
 
         }
 
-        public async Task BulkUpload<T>(List<T> list)
+        public async Task BulkUpload<T>(List<T> list, string collectionId)
         {
             var collectionLink = UriFactory.CreateDocumentCollectionUri(databaseId, collectionId);
             Console.WriteLine("CollectionLink... " + collectionLink);
@@ -41,7 +41,7 @@ namespace AzureRateCardUtils
                 //await client.CreateDocumentAsync(collectionLink, item);
                 await client.UpsertDocumentAsync(collectionLink, item, null, true);
             }
- 
+            Console.WriteLine("Import finished.");
         }
 
     }
